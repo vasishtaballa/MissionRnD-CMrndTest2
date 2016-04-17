@@ -38,7 +38,77 @@ struct oddevennode{
 
 };
 
-int * oddeven_sll(struct oddevennode *head){
-
-	return NULL;
+int * oddeven_sll(struct oddevennode *head)
+{
+	if (head == NULL)
+		return NULL;
+	int oddCount = 0, evenCount = 0;
+	int *countArray = (int *)malloc(sizeof(int)* 2);
+	struct oddevennode *temp1;
+	struct oddevennode *odd = NULL, *even = NULL;
+	struct oddevennode *oddlinkedlist = NULL, *evenlinkedlist = NULL, *temp = head, *cur = head;
+	while (temp != NULL)
+	{
+		if ((temp->data) % 2 == 0)
+		{
+			evenCount++;
+			temp1 = (struct oddevennode *)malloc(sizeof(struct oddevennode));
+			temp1->data = temp->data;
+			temp1->next = NULL;
+			temp1->random = NULL;
+			if (evenlinkedlist == NULL)
+			{
+				evenlinkedlist = temp1;
+				even = evenlinkedlist;
+			}
+			else
+			{
+				evenlinkedlist->next = NULL;
+				evenlinkedlist->random = temp1;
+				evenlinkedlist = evenlinkedlist->random;
+			}
+		}
+		else
+		{
+			oddCount++;
+			oddevennode *temp2 = (struct oddevennode *)malloc(sizeof(oddevennode));
+			temp2->data = temp->data;
+			temp2->next = NULL;
+			temp2->random = NULL;
+			if (oddlinkedlist == NULL)
+			{
+				oddlinkedlist = temp2;
+				odd = oddlinkedlist;
+			}
+			else
+			{
+				oddlinkedlist->next = NULL;
+				oddlinkedlist->random = temp2;
+				oddlinkedlist = oddlinkedlist->random;
+			}
+		}
+		temp = temp->next;
+	}
+	while (cur != NULL)
+	{
+		if (even != NULL){
+			if (cur->data == even->data)
+			{
+				cur->random = even->random;
+				even = even->random;
+				cur = cur->next;
+			}
+		}
+		if (odd != NULL){
+			if (cur->data == odd->data)
+			{
+				cur->random = odd->random;
+				odd = odd->random;
+				cur = cur->next;
+			}
+		}
+	}
+	countArray[0] = oddCount;
+	countArray[1] = evenCount;
+	return countArray;
 }
